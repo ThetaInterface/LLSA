@@ -505,7 +505,7 @@ public partial class MainWindow : Window
 
         stats += LocaleManager.FormatLine(LocaleManager.Locales[language]["stats_SpeakPlan"],
             Math.Round(overallLanguageUseSecondCount / ((double)planSpeakHourAmount * 3600 / 100), 3).ToString(),
-            planWatchHourAmount.ToString()) + "\n";
+            planSpeakHourAmount.ToString()) + "\n";
         stats += LocaleManager.FormatLine(LocaleManager.Locales[language]["stats_SpeakEstimatedTime"],
             Math.Round(((double)planSpeakHourAmount * 3600 - overallLanguageUseSecondCount) / ((double)overallLanguageUseSecondCount / overallLanguageUseDays), 0, MidpointRounding.ToPositiveInfinity).ToString()) + "\n";
 
