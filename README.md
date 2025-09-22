@@ -19,7 +19,7 @@ It is designed for learners who want to stay motivated, keep a clear overview of
   Enter statistics using a key-based time format.  
   Example:  
 
-3h 6m 7ы
+3h 6m 7s
 
 This makes recording times quick and intuitive.
 
