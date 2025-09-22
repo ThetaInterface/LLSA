@@ -46,7 +46,7 @@ public static class ConfigManager
     public static void WriteDefaultConfig(string configFilePath)
     {
         Dictionary<string, string> values = new Dictionary<string, string>() {
-            { "version", "1.0.0" },
+            { "version", "1.0.1" },
             { "language", "English" },
             { "StartDate", $"{DateTime.Now}" },
             { "LastLoginDate", $"{DateTime.Now}" },
