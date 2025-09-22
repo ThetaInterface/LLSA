@@ -1,0 +1,75 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:LLSA.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        MinHeight="630"
+        MinWidth="1300"
+        Height="630"
+        Width="1300"
+        x:Class="LLSA.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/logo2.ico"
+        Title="LLSA">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+    
+    <Grid RowDefinitions="Auto,*,Auto">
+        
+        <!-- Верхняя часть с заголовком -->
+        <Grid Grid.Row="0" Background="#2D2D2D">
+            <TextBlock x:Name="application_title" Tag="{Binding HotReloadLocale}"
+                    Text="{Binding Title}"
+                    FontSize="24"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="0, 20, 0, 20"/>
+
+            <Button x:Name="button_Settings" Click="Settings_Click" Width="100" Height="40" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0, 0, 20, 0">
+                <Image Source="avares://LLSA/Assets/settings.png"
+                    Width="24"
+                    Height="24"/>
+            </Button>
+
+        </Grid>
+
+        <!-- Центральная рабочая область -->
+        <Grid ColumnDefinitions="*, *" Grid.Row="1">
+            <Border x:Name="border_MainMenu" Grid.Column="0" Background="#3C3C3C" IsVisible="True">
+                <StackPanel x:Name="stackPanel_MainMenu" Margin="20"/>
+            </Border>
+
+            <Border x:Name="border_Settings" Grid.Column="0" Background="#3C3C3C" IsVisible="False">
+                <StackPanel x:Name="stackPanel_Settings" Margin="20"/>
+            </Border>
+
+            <StackPanel Grid.Column="1" Background="#3C3C3C">
+                <Border Background="#323232" Margin="20" CornerRadius="20">
+                    <TextBlock x:Name="textBlock_stats"
+                            FontSize="15"
+                            Foreground="White"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Margin="15"/>
+                </Border>
+            </StackPanel>
+        </Grid>
+
+        <!-- Нижняя часть с версией -->
+        <Border Grid.Row="2" Background="#2D2D2D" Padding="5">
+            <TextBlock Text="{Binding Version}"
+                    Foreground="White"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"/>
+        </Border>
+
+    </Grid>
+
+</Window>
