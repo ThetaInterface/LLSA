@@ -1,0 +1,47 @@
+locale_name = Русский
+application_title = Программа Статистики Изучения Языка
+
+stats_WatchedHours = Просмотренно: *
+stats_WatchedVideos = Просмотренно видео: * видео
+stats_ElapsedDays = Прошло дней: * дней
+stats_WatchPlan = План просмотра: *% из * часов выполнено
+stats_WatchEstimatedTime = Примерное время: * дней
+stats_StartDate = Дата начала: *
+stats_SpeakPlan = План говорения: *% из * часов выполнено
+stats_SpeakEstimatedTime = Примерное время: * дней
+stats_SpokenHours = Проговорено: *
+stats_SpokenDays = Проговорено дней: * дней
+stats_SpokenToday = Проговорено сегодня: *
+stats_TodayQuotaBonus = Сегодняшний бонус квоты: *
+stats_WatchedToday = Просмотренно сегодня: *
+stats_TodayPlan = Сегодняшний план: *
+stats_Penalty = Штраф: *
+
+stats_Hour = ч
+stats_Minute = м
+stats_Second = с
+
+stats_PenaltyOverflow = Невиновен
+stats_TodayPlanOverflow = Готов
+
+settings_language = Язык интерфейса
+settings_PlanWatchHourAmount = Общий план аудирования (часы)
+settings_PlanSpeakHourAmount = Общий план разговорной практики (часы)
+settings_PlanQuotaAmount = Ежедневный план аудирования (часы)
+settings_QuotaBonusProcent = Бонус к аудированию за счет разговорной практики (проценты)
+
+settings_SaveButton = Применить
+
+mainMenu_TodaySecondCount = Время аудирования
+mainMenu_WatchedVideoCount = Кол-во просмотренных видео
+mainMenu_TodayLanguageUseSecondCount = Время разговорной практики
+
+mainMenu_SendButton = Отправить
+mainMenu_StatsUpdateButton = Обновить статистику
+mainMenu_ExitProgramButton = Выход
+
+mainMenu_InvertedSecondCountCheckBox = Инвертировать время
+mainMenu_InvertedVideoCountCheckBox = Инвертировать кол-во видео
+mainMenu_MultiplyVideoCountCheckBox = Умножить время аудирования на кол-во видео
+
+error_1 = НЕ НАЙДЕНО
