@@ -8,7 +8,7 @@ namespace LLSA.Config;
 
 public static class ConfigManager
 {
-    public static string ConfigPath { get; } = Path.Combine(AppContext.BaseDirectory, @"Data\config.ini");
+    public static string ConfigPath { get; } = Path.Combine(AppContext.BaseDirectory, "Data", "config.ini");
 
     public static Dictionary<string, string> ReadConfig(string configFilePath)
     {
@@ -46,7 +46,7 @@ public static class ConfigManager
     public static void WriteDefaultConfig(string configFilePath)
     {
         Dictionary<string, string> values = new Dictionary<string, string>() {
-            { "version", "1.0.1" },
+            { "version", "1.0.2" },
             { "language", "English" },
             { "StartDate", $"{DateTime.Now}" },
             { "LastLoginDate", $"{DateTime.Now}" },

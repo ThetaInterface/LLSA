@@ -8,7 +8,7 @@ namespace LLSA.Locale;
 
 public static class LocaleManager
 {
-    public static Dictionary<string, Dictionary<string, string>> Locales = GetLocaleContents(Path.Combine(AppContext.BaseDirectory, @"Data\Locale"));
+    public static Dictionary<string, Dictionary<string, string>> Locales = GetLocaleContents(Path.Combine(AppContext.BaseDirectory, "Data", "Locale"));
 
     public static string FormatLine(string line, params string[] variables)
     {
