@@ -411,7 +411,7 @@ public partial class MainWindow : Window
         int overallSecondCount = int.Parse(config["OverallSecondCount"]);
         int todaySecondCount = int.Parse(config["TodaySecondCount"]);
         int penaltySecondCount = int.Parse(config["PenaltySecondCount"]);
-        int planQuotaAmount = int.Parse(config["PlanQuotaAmount"]);
+        double planQuotaAmount = double.Parse(config["PlanQuotaAmount"]);
         int quotaBonusProcent = int.Parse(config["QuotaBonusProcent"]);
         int overallLanguageUseDays = int.Parse(config["OverallLanguageUseDays"]);
         int overallLanguageUseSecondCount = int.Parse(config["OverallLanguageUseSecondCount"]);
@@ -423,7 +423,7 @@ public partial class MainWindow : Window
         {
             lastLoginDate = DateTime.Now;
 
-            int tommorowPlanLefover = planQuotaAmount * 3600 * daysPassedSinceLastLogin + penaltySecondCount - todaySecondCount;
+            int tommorowPlanLefover = (int)(planQuotaAmount * 3600 * daysPassedSinceLastLogin + penaltySecondCount - todaySecondCount);
 
             if (todayLanguageUseSecondCount > 0)
             {
@@ -466,7 +466,7 @@ public partial class MainWindow : Window
         int watchedVideoCount = int.Parse(config["WatchedVideoCount"]);
         int planWatchHourAmount = int.Parse(config["PlanWatchHourAmount"]);
         int planSpeakHourAmount = int.Parse(config["PlanSpeakHourAmount"]);
-        int planQuotaAmount = int.Parse(config["PlanQuotaAmount"]);
+        double planQuotaAmount = double.Parse(config["PlanQuotaAmount"]);
         int quotaBonusProcent = int.Parse(config["QuotaBonusProcent"]);
         int overallLanguageUseDays = int.Parse(config["OverallLanguageUseDays"]);
         int overallLanguageUseSecondCount = int.Parse(config["OverallLanguageUseSecondCount"]);
@@ -492,7 +492,7 @@ public partial class MainWindow : Window
         stats += LocaleManager.FormatLine(LocaleManager.Locales[language]["stats_WatchedToday"],
             time) + "\n";
 
-        int temp_time = planQuotaAmount * 3600 + penaltySecondCount - todaySecondCount;
+        int temp_time = (int)(planQuotaAmount * 3600 + penaltySecondCount - todaySecondCount);
         temp_time = todayLanguageUseSecondCount > 0 ? temp_time - todayQuotaBonus : temp_time;
 
         time = FormatSeconds(temp_time, language, LocaleManager.Locales[language]["stats_TodayPlanOverflow"]);
