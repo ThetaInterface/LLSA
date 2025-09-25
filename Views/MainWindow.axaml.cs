@@ -473,12 +473,15 @@ public partial class MainWindow : Window
         int todayLanguageUseSecondCount = int.Parse(config["TodayLanguageUseSecondCount"]);
 
         int todayQuotaBonus = todayLanguageUseSecondCount / 100 * quotaBonusProcent;
+        int elapsedDays = (DateTime.Now - startDate).Days;
+
+        elapsedDays = elapsedDays <= 0 ? 1 : elapsedDays;
 
         stats += LocaleManager.FormatLine(LocaleManager.Locales[language]["stats_WatchPlan"],
             Math.Round(overallSecondCount / ((double)planWatchHourAmount * 3600 / 100), 3).ToString(),
             planWatchHourAmount.ToString()) + "\n";
         stats += LocaleManager.FormatLine(LocaleManager.Locales[language]["stats_WatchEstimatedTime"],
-            Math.Round(((double)planWatchHourAmount * 3600 - overallSecondCount) / 3600 / planQuotaAmount, 0, MidpointRounding.ToPositiveInfinity).ToString()) + "\n";
+            AboveZero(() => (int)Math.Round(((double)planWatchHourAmount * 3600 - overallSecondCount) / (overallSecondCount / elapsedDays), 0, MidpointRounding.ToPositiveInfinity)).ToString()) + "\n";
 
         string time = FormatSeconds(overallSecondCount, language);
         stats += LocaleManager.FormatLine(LocaleManager.Locales[language]["stats_WatchedHours"],
@@ -486,7 +489,7 @@ public partial class MainWindow : Window
         stats += LocaleManager.FormatLine(LocaleManager.Locales[language]["stats_WatchedVideos"],
             watchedVideoCount.ToString()) + "\n";
         stats += LocaleManager.FormatLine(LocaleManager.Locales[language]["stats_ElapsedDays"],
-            (DateTime.Now - startDate).Days.ToString()) + "\n";
+            elapsedDays.ToString()) + "\n";
 
         time = FormatSeconds(todaySecondCount, language);
         stats += LocaleManager.FormatLine(LocaleManager.Locales[language]["stats_WatchedToday"],
@@ -507,7 +510,7 @@ public partial class MainWindow : Window
             Math.Round(overallLanguageUseSecondCount / ((double)planSpeakHourAmount * 3600 / 100), 3).ToString(),
             planSpeakHourAmount.ToString()) + "\n";
         stats += LocaleManager.FormatLine(LocaleManager.Locales[language]["stats_SpeakEstimatedTime"],
-            Math.Round(((double)planSpeakHourAmount * 3600 - overallLanguageUseSecondCount) / ((double)overallLanguageUseSecondCount / overallLanguageUseDays), 0, MidpointRounding.ToPositiveInfinity).ToString()) + "\n";
+            AboveZero(() => (int)Math.Round(((double)planSpeakHourAmount * 3600 - overallLanguageUseSecondCount) / (overallLanguageUseSecondCount / overallLanguageUseDays), 0, MidpointRounding.ToPositiveInfinity)).ToString()) + "\n";
 
         time = FormatSeconds(overallLanguageUseSecondCount, language);
         stats += LocaleManager.FormatLine(LocaleManager.Locales[language]["stats_SpokenHours"],
@@ -526,6 +529,25 @@ public partial class MainWindow : Window
             startDate.ToString());
 
         return stats;
+    }
+
+    private int AboveZero(Func<int> process)
+    {
+        int value;
+
+        try
+        {
+            value = process();
+        }
+        catch
+        {
+            value = 0;
+        }
+
+        if (value < 0)
+            value = 0;
+
+        return value;
     }
 
     private string FormatSeconds(int unformated, string language, string overflow = "-")
