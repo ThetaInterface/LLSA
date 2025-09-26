@@ -481,7 +481,8 @@ public partial class MainWindow : Window
             Math.Round(overallSecondCount / ((double)planWatchHourAmount * 3600 / 100), 3).ToString(),
             planWatchHourAmount.ToString()) + "\n";
         stats += LocaleManager.FormatLine(LocaleManager.Locales[language]["stats_WatchEstimatedTime"],
-            AboveZero(() => (int)Math.Round(((double)planWatchHourAmount * 3600 - overallSecondCount) / (overallSecondCount / elapsedDays), 0, MidpointRounding.ToPositiveInfinity)).ToString()) + "\n";
+            $"{AboveZero(() => (int)Math.Round(((double)planWatchHourAmount * 3600 - overallSecondCount) / (overallSecondCount / elapsedDays), 0, MidpointRounding.ToPositiveInfinity))}~" +
+            $"{AboveZero(() => (int)Math.Round(((double)planWatchHourAmount * 3600 - overallSecondCount) / (planQuotaAmount * 3600), 0, MidpointRounding.ToPositiveInfinity))}") + "\n";
 
         string time = FormatSeconds(overallSecondCount, language);
         stats += LocaleManager.FormatLine(LocaleManager.Locales[language]["stats_WatchedHours"],
