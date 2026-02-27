@@ -244,7 +244,7 @@ public partial class MainWindow : Window
             foreach (var children in this.GetVisualDescendants().OfType<Control>().Where(x => x.Tag is Tag && (x.Tag as Tag ?? new Tag(false)).OtherTag.Contains("mainMenu")).ToArray())
             {
                 string tag = (children.Tag as Tag)?.OtherTag[0] ?? "";
-                
+
                 int input = 0;
 
                 switch (tag)
@@ -259,7 +259,6 @@ public partial class MainWindow : Window
                         foreach (string request in requests)
                         {
                             string key = "";
-                            int value = 0;
 
                             for (int i = 0; i < request.Length; i++)
                                 if (!int.TryParse(request[i].ToString(), out _))
@@ -267,7 +266,7 @@ public partial class MainWindow : Window
 
                             key.ToLower();
 
-                            if (!int.TryParse(request.Replace(key, ""), out value))
+                            if (!int.TryParse(request.Replace(key, ""), out int value))
                                 continue;
 
                             switch (key)
@@ -539,12 +538,18 @@ public partial class MainWindow : Window
 
     private static int Below(Func<int> process, int min = 0)
     {
-        int value = process();
+        try {
+            int value = process();
 
-        if (value < min)
-            value = min;
+            if (value < min)
+                value = min;
 
-        return value;
+            return value;
+        }
+        catch
+        {
+            return min;
+        }
     }
 
     private static int Above(Func<int> process, int max = 0)
