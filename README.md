@@ -15,6 +15,7 @@ For entering study times, LLSA uses a **key-based format**. This makes it easy t
 1h 20m 15s
 
 This project is licensed under the MIT License.
+
 🌍 Why LLSA?
 
 Learning a language takes consistency and motivation. With LLSA, your progress is visible, measurable, and more rewarding. By tracking your listening and speaking practice daily—and balancing penalties with bonuses—you stay committed and make steady progress toward fluency.
