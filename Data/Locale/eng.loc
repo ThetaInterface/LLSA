@@ -5,7 +5,7 @@ stats_WatchedHours = Watched: *
 stats_WatchedVideos = Watched videos: * videos
 stats_ElapsedDays = Elapsed days: * days
 stats_WatchPlan = Watch Plan: *% of * hours is done
-stats_WatchEstimatedTime = Estimated time: * days
+stats_WatchEstimatedTime = Estimated time:\n* days on records\n* days on plan (minimum)\n* days on plan (maximum)
 stats_StartDate = Start date: *
 stats_SpeakPlan = Speak Plan: *% of * hours is done
 stats_SpeakEstimatedTime = Estimated time: * days
@@ -29,6 +29,7 @@ settings_PlanWatchHourAmount = Total listening plan (hours)
 settings_PlanSpeakHourAmount = Total speaking practice plan (hours)
 settings_PlanQuotaAmount = Daily listening plan (hours)
 settings_QuotaBonusProcent = Listening bonus from speaking practice (%)
+settings_BonusRestriction = Bonus restriction (procents)
 
 settings_SaveButton = Save
 

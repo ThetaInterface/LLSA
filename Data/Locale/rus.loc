@@ -5,7 +5,7 @@ stats_WatchedHours = Просмотренно: *
 stats_WatchedVideos = Просмотренно видео: * видео
 stats_ElapsedDays = Прошло дней: * дней
 stats_WatchPlan = План просмотра: *% из * часов выполнено
-stats_WatchEstimatedTime = Примерное время: * дней
+stats_WatchEstimatedTime = Примерное время: ↓\n* дней по данным\n* дней по плану (минимум)\n* дней по плану (максимум)
 stats_StartDate = Дата начала: *
 stats_SpeakPlan = План говорения: *% из * часов выполнено
 stats_SpeakEstimatedTime = Примерное время: * дней
@@ -29,6 +29,7 @@ settings_PlanWatchHourAmount = Общий план аудирования (ча�
 settings_PlanSpeakHourAmount = Общий план разговорной практики (часы)
 settings_PlanQuotaAmount = Ежедневный план аудирования (часы)
 settings_QuotaBonusProcent = Бонус к аудированию за счет разговорной практики (проценты)
+settings_BonusRestriction = Ограничение бонуса (проценты)
 
 settings_SaveButton = Применить
 

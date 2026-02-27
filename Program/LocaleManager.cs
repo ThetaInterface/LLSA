@@ -22,6 +22,9 @@ public static class LocaleManager
                 break;
             }
 
+        line = line.Replace("\\n", "\n");
+        line = line.Replace("\\t", "\t");
+
         return line;
     }
 

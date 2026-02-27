@@ -5,7 +5,7 @@ stats_WatchedHours = 視聴時間: *
 stats_WatchedVideos = 視聴動画数: * 本
 stats_ElapsedDays = 経過日数: * 日
 stats_WatchPlan = 視聴計画: *% は *時間から達成済み
-stats_WatchEstimatedTime = 推定所要日数: * 日
+stats_WatchEstimatedTime = 推定所要日数:\n* 日 記録により\n* 日 計画により（最低）\n* 日 計画により（最高）
 stats_StartDate = 開始日: *
 stats_SpeakPlan = 会話計画: *% は *時間から達成済み
 stats_SpeakEstimatedTime = 推定所要日数: * 日
@@ -28,7 +28,8 @@ settings_language = UI言語
 settings_PlanWatchHourAmount = 合計視聴計画（時間）
 settings_PlanSpeakHourAmount = 合計会話練習計画（時間）
 settings_PlanQuotaAmount = 1日の視聴計画（時間）
-settings_QuotaBonusProcent = 会話練習からの視聴ボーナス（%）
+settings_QuotaBonusProcent = 会話練習からの視聴ボーナス（％）
+settings_BonusRestriction = ボーナス制限（％）
 
 settings_SaveButton = 保存
 

@@ -244,7 +244,7 @@ public partial class MainWindow : Window
             foreach (var children in this.GetVisualDescendants().OfType<Control>().Where(x => x.Tag is Tag && (x.Tag as Tag ?? new Tag(false)).OtherTag.Contains("mainMenu")).ToArray())
             {
                 string tag = (children.Tag as Tag)?.OtherTag[0] ?? "";
-
+                
                 int input = 0;
 
                 switch (tag)
@@ -412,10 +412,11 @@ public partial class MainWindow : Window
         int todaySecondCount = int.Parse(config["TodaySecondCount"]);
         int penaltySecondCount = int.Parse(config["PenaltySecondCount"]);
         double planQuotaAmount = double.Parse(config["PlanQuotaAmount"]);
-        int quotaBonusProcent = int.Parse(config["QuotaBonusProcent"]);
+        double quotaBonusProcent = double.Parse(config["QuotaBonusProcent"]);
         int overallLanguageUseDays = int.Parse(config["OverallLanguageUseDays"]);
         int overallLanguageUseSecondCount = int.Parse(config["OverallLanguageUseSecondCount"]);
         int todayLanguageUseSecondCount = int.Parse(config["TodayLanguageUseSecondCount"]);
+        double bonusRestriction = double.Parse(config["BonusRestriction"]);
 
         int daysPassedSinceLastLogin = (DateTime.Now.Date - lastLoginDate.Date).Days;
 
@@ -423,15 +424,17 @@ public partial class MainWindow : Window
         {
             lastLoginDate = DateTime.Now;
 
-            int tommorowPlanLefover = (int)(planQuotaAmount * 3600 * daysPassedSinceLastLogin + penaltySecondCount - todaySecondCount);
+            int tommorowPlanLeftover = (int)(planQuotaAmount * 3600 * daysPassedSinceLastLogin + penaltySecondCount - todaySecondCount);
 
             if (todayLanguageUseSecondCount > 0)
             {
-                tommorowPlanLefover -= (int)Math.Round((double)todayLanguageUseSecondCount / 100.0 * quotaBonusProcent, 0);
+                int temp_time = Above(() => (int)(todayLanguageUseSecondCount * quotaBonusProcent / 100), (int)(planQuotaAmount * 3600 * (bonusRestriction / 100)));
+ 
+                tommorowPlanLeftover -= temp_time;
                 overallLanguageUseDays += 1;
             }
 
-            penaltySecondCount = tommorowPlanLefover >= 0 ? tommorowPlanLefover : 0;
+            penaltySecondCount = tommorowPlanLeftover >= 0 ? tommorowPlanLeftover : 0;
             overallSecondCount += todaySecondCount;
             overallLanguageUseSecondCount += todayLanguageUseSecondCount;
 
@@ -467,22 +470,25 @@ public partial class MainWindow : Window
         int planWatchHourAmount = int.Parse(config["PlanWatchHourAmount"]);
         int planSpeakHourAmount = int.Parse(config["PlanSpeakHourAmount"]);
         double planQuotaAmount = double.Parse(config["PlanQuotaAmount"]);
-        int quotaBonusProcent = int.Parse(config["QuotaBonusProcent"]);
+        double quotaBonusProcent = double.Parse(config["QuotaBonusProcent"]);
         int overallLanguageUseDays = int.Parse(config["OverallLanguageUseDays"]);
         int overallLanguageUseSecondCount = int.Parse(config["OverallLanguageUseSecondCount"]);
         int todayLanguageUseSecondCount = int.Parse(config["TodayLanguageUseSecondCount"]);
+        double bonusRestriction = double.Parse(config["BonusRestriction"]);
 
-        int todayQuotaBonus = todayLanguageUseSecondCount / 100 * quotaBonusProcent;
+        int todayQuotaBonus = Above(() => (int)(todayLanguageUseSecondCount / 100 * quotaBonusProcent), (int)(planQuotaAmount * 3600 * (bonusRestriction / 100)));
         int elapsedDays = (DateTime.Now - startDate).Days;
 
         elapsedDays = elapsedDays <= 0 ? 1 : elapsedDays;
 
+        string space = new (' ', LocaleManager.Locales[language]["stats_WatchEstimatedTime"].Split("\\n")[0].Length);
         stats += LocaleManager.FormatLine(LocaleManager.Locales[language]["stats_WatchPlan"],
             Math.Round(overallSecondCount / ((double)planWatchHourAmount * 3600 / 100), 3).ToString(),
             planWatchHourAmount.ToString()) + "\n";
         stats += LocaleManager.FormatLine(LocaleManager.Locales[language]["stats_WatchEstimatedTime"],
-            $"{AboveZero(() => (int)Math.Round(((double)planWatchHourAmount * 3600 - overallSecondCount) / (overallSecondCount / elapsedDays), 0, MidpointRounding.ToPositiveInfinity))}~" +
-            $"{AboveZero(() => (int)Math.Round(((double)planWatchHourAmount * 3600 - overallSecondCount) / (planQuotaAmount * 3600), 0, MidpointRounding.ToPositiveInfinity))}") + "\n";
+            $"{space}~{Below(() => (int)Math.Round(((double)planWatchHourAmount * 3600 - overallSecondCount) / (overallSecondCount / elapsedDays), 0, MidpointRounding.ToPositiveInfinity))}",
+            $"{space}~{Below(() => (int)Math.Round(((double)planWatchHourAmount * 3600 - overallSecondCount) / (planQuotaAmount * 3600), 0, MidpointRounding.ToPositiveInfinity))}",
+            $"{space}~{Below(() => (int)Math.Round(((double)planWatchHourAmount * 3600 - overallSecondCount) / (planQuotaAmount * 3600 * (1 - bonusRestriction / 100)), 0, MidpointRounding.ToPositiveInfinity))}") + "\n";
 
         string time = FormatSeconds(overallSecondCount, language);
         stats += LocaleManager.FormatLine(LocaleManager.Locales[language]["stats_WatchedHours"],
@@ -498,7 +504,6 @@ public partial class MainWindow : Window
 
         int temp_time = (int)(planQuotaAmount * 3600 + penaltySecondCount - todaySecondCount);
         temp_time = todayLanguageUseSecondCount > 0 ? temp_time - todayQuotaBonus : temp_time;
-
         time = FormatSeconds(temp_time, language, LocaleManager.Locales[language]["stats_TodayPlanOverflow"]);
         stats += LocaleManager.FormatLine(LocaleManager.Locales[language]["stats_TodayPlan"],
             time) + "\n";
@@ -511,7 +516,7 @@ public partial class MainWindow : Window
             Math.Round(overallLanguageUseSecondCount / ((double)planSpeakHourAmount * 3600 / 100), 3).ToString(),
             planSpeakHourAmount.ToString()) + "\n";
         stats += LocaleManager.FormatLine(LocaleManager.Locales[language]["stats_SpeakEstimatedTime"],
-            AboveZero(() => (int)Math.Round(((double)planSpeakHourAmount * 3600 - overallLanguageUseSecondCount) / (overallLanguageUseSecondCount / overallLanguageUseDays), 0, MidpointRounding.ToPositiveInfinity)).ToString()) + "\n";
+            Below(() => (int)Math.Round(((double)planSpeakHourAmount * 3600 - overallLanguageUseSecondCount) / (overallLanguageUseSecondCount / overallLanguageUseDays), 0, MidpointRounding.ToPositiveInfinity)).ToString()) + "\n";
 
         time = FormatSeconds(overallLanguageUseSecondCount, language);
         stats += LocaleManager.FormatLine(LocaleManager.Locales[language]["stats_SpokenHours"],
@@ -532,21 +537,22 @@ public partial class MainWindow : Window
         return stats;
     }
 
-    private int AboveZero(Func<int> process)
+    private static int Below(Func<int> process, int min = 0)
     {
-        int value;
+        int value = process();
 
-        try
-        {
-            value = process();
-        }
-        catch
-        {
-            value = 0;
-        }
+        if (value < min)
+            value = min;
 
-        if (value < 0)
-            value = 0;
+        return value;
+    }
+
+    private static int Above(Func<int> process, int max = 0)
+    {
+        int value = process();
+
+        if (value > max)
+            value = max;
 
         return value;
     }
@@ -593,6 +599,8 @@ public partial class MainWindow : Window
             error = "Important directories do not exist (locales)! IFDE_2";
             return false;
         }
+
+        ConfigManager.Repair();
 
         error = "OK";
         return true;
