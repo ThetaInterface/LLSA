@@ -28,7 +28,7 @@ public partial class MainWindow : Window
 
         AppDomain.CurrentDomain.UnhandledException += UnhandledException;
 
-        if (!CheckFiles(AppContext.BaseDirectory, out string error))
+        if (!CheckFiles(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "LLSA"), out string error))
         {
             LogManager.Log(error);
 
@@ -581,16 +581,14 @@ public partial class MainWindow : Window
 
     private bool CheckFiles(string path, out string error)
     {
-        path = Path.Combine(path, "Data");
-
         if (!Directory.Exists(path) || !Directory.Exists(Path.Combine(path, "Locale")))
         {
             error = "Important directories do not exist! IFDE_1";
             return false;
         }
 
-        if (!File.Exists(Path.Combine(path, "error.log")))
-            File.Create(Path.Combine(path, "error.log"));
+        if (!File.Exists(Path.Combine(path, "logs.txt")))
+            File.Create(Path.Combine(path, "logs.txt")).Close();
 
         if (!File.Exists(Path.Combine(path, "config.ini")))
         {
